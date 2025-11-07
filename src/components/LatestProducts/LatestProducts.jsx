@@ -3,7 +3,7 @@ import LatestProductCard from '../LatestProductCard/LatestProductCard';
 
 const LatestProducts = ({latestProductPromise}) => {
     const latestProduct = use(latestProductPromise)
-    console.log('latest products info',latestProduct);
+    // console.log('latest products info',latestProduct);
     return (
         <div>
             <h3 className='text-center'>Latest Product : {latestProduct.length}</h3>

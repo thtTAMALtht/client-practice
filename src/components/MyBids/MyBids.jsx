@@ -1,19 +1,40 @@
 import { use, useEffect, useState } from "react";
-import useAxiosHook from "../../hooks/useAxiosHook";
+
 import AuthContext from "../../context/AuthContext";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const MyBids = () => {
-  const axiosHook = useAxiosHook();
+  const axiosSecureHook = useAxiosSecure();
   const { user } = use(AuthContext);
   const [myBids, setMyBids] = useState([]);
+
+    // console.log(user.accessToken);
+
+
   useEffect(() => {
     if (user?.email) {
-      axiosHook.get(`/bids?email=${user?.email}`).then((data) => {
+      axiosSecureHook.get(`/bids?email=${user?.email}`).then((data) => {
         setMyBids(data.data);
       });
     }
-  }, [axiosHook, user?.email]);
+  }, [axiosSecureHook, user?.email]);
+
+    // useEffect(()=>{
+    //     if(user?.email){
+    //         fetch(`http://localhost:5000/bids?email=${user?.email}`,{
+    //             headers : {
+    //                 authorization : `Bearer ${user.accessToken}`
+    //             }
+    //         })
+    //         .then(res=>res.json())
+    //         .then(data=>{
+    //             console.log(data);
+    //             setMyBids(data)
+    //         })
+    //     }
+    // },[user])
+
 
   const handleRemoveBit = (id) => {
     Swal.fire({
@@ -26,7 +47,7 @@ const MyBids = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosHook.delete(`/bids/${id}`).then((data) => {
+        axiosSecureHook.delete(`/bids/${id}`).then((data) => {
           if (data.data.deletedCount) {
             Swal.fire({
               title: "Deleted!",

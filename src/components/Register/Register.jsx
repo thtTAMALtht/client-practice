@@ -1,11 +1,13 @@
 import React, { use } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import AuthContext from "../../context/AuthContext";
 import useAxiosHook from "../../hooks/useAxiosHook";
 
 const Register = () => {
   const { googleSignIn } = use(AuthContext);
   const axiosHook = useAxiosHook();
+  const location =useLocation();
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = () => {
     googleSignIn()
@@ -19,6 +21,7 @@ const Register = () => {
 
         axiosHook.post("/users", userInfo)
         .then((data) => {
+          
           console.log("after user post", data.data);
         });
 
@@ -33,6 +36,7 @@ const Register = () => {
         // .then(data=>{
         //   console.log('after user post',data);
         // })
+        navigate(location.state || "/")
       })
       .catch((error) => {
         console.log(error);

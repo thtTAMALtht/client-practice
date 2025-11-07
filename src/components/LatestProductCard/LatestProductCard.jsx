@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+
 const LatestProductCard = ({latest}) => {
     const {_id, title, price_min, price_max, image } = latest;
     return (
